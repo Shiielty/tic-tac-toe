@@ -3,5 +3,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
+}
+
+.game-board {
+  width: 310px;
+  display: grid;
+  gap: 5px;
+  grid-template-columns: repeat(auto-fill, 100px);
+}
+
+.tile {
+  height: 100px;
+  background-color: rgb(89, 187, 233);
 }
