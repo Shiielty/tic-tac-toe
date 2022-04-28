@@ -5,6 +5,7 @@ const gameBoard = (() => {
     //selector
     const btn = document.querySelector("button");
     const gameBoard = document.querySelector(".game-board");
+    
 
     //create tiles
     const makeTiles = () => {
@@ -13,9 +14,6 @@ const gameBoard = (() => {
             tile.classList.add("tile");
             tile.dataset.index = i;
             board.push(tile);
-            console.log(tile);
-            tile = null;
-            console.log(tile);
         }
     }
 
@@ -26,26 +24,33 @@ const gameBoard = (() => {
         });
     }
 
+    const consoleBtn = () => {
+        console.log("Hello world!")
+    }
+
+    const checkIndex = (e) => {
+        e.addEventListener("click", () => console.log(e.dataset.index));
+    }
+
+    const events = () => {
+        btn.addEventListener("click", consoleBtn)
+        const tiles = document.querySelectorAll(".tile");
+        tiles.forEach((tile) => {
+            checkIndex(tile);
+        });
+    };
+
     // initiate the gameBoard object's functions
     const init = () => {
         makeTiles();
         render();
+        events();
     }
 
-    const alertBtn = () => {
-        btn.addEventListener("click", () => alert("Hi! Let's start this project!"))
-    };
-
-    return {init, alertBtn}
+    return {init}
         
     
 })();
 
 gameBoard.init();
 
-
-// testing does the dataset are correctly used :: problem is I can't put this variable and function in the gameBoard yet
-const tiles = document.querySelectorAll(".tile");
-tiles.forEach((tile) => {
-    tile.addEventListener("click", () => console.log(tile.dataset.index));
-});
