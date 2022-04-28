@@ -26,6 +26,7 @@ const gameBoard = (() => {
         });
     }
 
+    // initiate the gameBoard object's functions
     const init = () => {
         makeTiles();
         render();
