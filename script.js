@@ -10,12 +10,12 @@ const gameBoard = (() => {
             tile.dataset.index = i;
             
             const X = document.createElement("span");
-            X.classList.add("x");
+            X.classList.add("x", "display-none");
             X.dataset.index = i;
             X.textContent = "X";
             
             const O = document.createElement("span");
-            O.classList.add("o");
+            O.classList.add("o", "display-none");
             O.dataset.index = i;
             O.textContent = "O";
             
@@ -28,7 +28,7 @@ const gameBoard = (() => {
     //render tiles
     const render = () => {
         const gameBoard = document.querySelector(".game-board");
-        
+
         board.forEach((tile) => {
             gameBoard.appendChild(tile);
         });
@@ -43,7 +43,13 @@ const gameBoard = (() => {
     return {init}  
 })();
 
+
 const gameController = (() => {
+
+    const player1 = "Player 1";
+    const player2 = "Player 2";
+
+    let currentPlayer = player1;
 
     const consoleBtn = () => {
         console.log("Hello world!");
@@ -53,13 +59,25 @@ const gameController = (() => {
         e.addEventListener("click", () => console.log(e.dataset.index));
     }
 
+    const turn = (e) => {
+        const index = e.dataset.index;
+
+        e.addEventListener("click", () => {
+            const X = e.childNodes[0];
+            const O = e.childNodes[1];
+
+            X.classList.toggle("display-none")
+        })
+    }
+
     const events = () => {
         const btn = document.querySelector("button");
         const test = document.querySelectorAll(".tile");
 
         btn.addEventListener("click", consoleBtn);
         test.forEach((tile) => {
-            checkIndex(tile);
+            // checkIndex(tile);
+            turn(tile);
         });
     };
 
