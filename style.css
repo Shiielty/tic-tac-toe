@@ -8,17 +8,35 @@
 /* font-family: 'Montserrat', sans-serif;
 font-family: 'Patua One', cursive;
 font-family: 'Press Start 2P', cursive; */
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Patua+One&family=Press+Start+2P&display=swap");
 
 .wrapper {
+  padding: 50px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: var(--green);
   /* justify-content: center; */
+  font-family: "Press Start 2P", cursive;
+}
+
+h1 {
+  font-size: 2.1rem;
+}
+
+.game-info {
+  font-size: 1rem;
+}
+
+.reset {
+  font-family: "Patua One", cursive;
+  font-size: 1rem;
+  letter-spacing: 0.2rem;
+  margin-top: 24px;
 }
 
 .game-board {
+  margin-top: 50px;
   width: 310px;
   display: grid;
   gap: 5px;
@@ -27,7 +45,7 @@ font-family: 'Press Start 2P', cursive; */
 
 .tile {
   height: 100px;
-  background-color: rgb(89, 187, 233);
+  background-color: #ffffff;
 }
 
 .x,
@@ -36,6 +54,14 @@ font-family: 'Press Start 2P', cursive; */
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--red);
+  font-family: "Montserrat", sans-serif;
+  font-size: 110px;
+}
+
+.x {
+  color: var(--blue);
+  font-size: 90px;
 }
 
 .display-none {
