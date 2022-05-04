@@ -25,18 +25,40 @@ h1 {
 }
 
 .game-info {
-  font-size: 1rem;
+  font-size: 0.9rem;
+  padding: 0 10px;
+  margin-top: 72px;
+}
+
+.game-info > span {
+  background-color: var(--red);
+  padding: 12px 5px 12px 20px;
+}
+
+.game-info > span + span {
+  background-color: var(--blue);
+  color: #ffffff;
+  padding: 12px 20px 12px 5px;
 }
 
 .reset {
   font-family: "Patua One", cursive;
-  font-size: 1rem;
-  letter-spacing: 0.2rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.4rem;
   margin-top: 24px;
+  padding: 8px 15px;
+  border-radius: 0.5rem;
+  background-color: #000000;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.reset:hover {
+  background-color: #ffffff;
+  color: rgba(0, 0, 0, 0.95);
 }
 
 .game-board {
-  margin-top: 50px;
+  margin-top: 24px;
   width: 310px;
   display: grid;
   gap: 5px;
