@@ -1,3 +1,15 @@
+:root {
+  --green: #c7e1ff;
+  --blue: #829dff;
+  --red: #ff6969;
+}
+
+/* import fonts */
+/* font-family: 'Montserrat', sans-serif;
+font-family: 'Patua One', cursive;
+font-family: 'Press Start 2P', cursive; */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Patua+One&family=Press+Start+2P&display=swap");
+
 .wrapper {
   min-height: 100vh;
   display: flex;
