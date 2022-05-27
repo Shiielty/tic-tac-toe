@@ -90,11 +90,11 @@ const gameController = (() => {
   };
 
   const events = () => {
-    const btn = document.querySelector("button");
-    const test = document.querySelectorAll(".tile");
+    const resetBtn = document.querySelector("button");
+    const tiles = document.querySelectorAll(".tile");
 
-    btn.addEventListener("click", reset);
-    test.forEach((tile) => {
+    resetBtn.addEventListener("click", reset);
+    tiles.forEach((tile) => {
       turn(tile);
     });
   };
