@@ -29,9 +29,11 @@ const gameBoard = (() => {
   const render = () => {
     const gameBoard = document.querySelector(".game-board");
 
-    board.forEach((tile) => {
-      gameBoard.appendChild(tile);
-    });
+    if (!gameBoard.hasChildNodes()) {
+      board.forEach((tile) => {
+        gameBoard.appendChild(tile);
+      });
+    }
   };
 
   // initiate the gameBoard object's functions
