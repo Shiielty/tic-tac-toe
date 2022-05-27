@@ -1,93 +1,102 @@
 const gameBoard = (() => {
+  const board = [];
 
-    const board = [];
-    
-    //create tiles
-    const makeTiles = () => {
-        for (let i = 0; i < 9; i++) {
-            const tile = document.createElement("div");
-            tile.classList.add("tile");
-            tile.dataset.index = i;
-            
-            const X = document.createElement("span");
-            X.classList.add("x", "display-none");
-            X.dataset.index = i;
-            X.textContent = "X";
-            
-            const O = document.createElement("span");
-            O.classList.add("o", "display-none");
-            O.dataset.index = i;
-            O.textContent = "O";
-            
-            tile.appendChild(X);
-            tile.appendChild(O);
-            board.push(tile);
-        }
+  //create tiles
+  const makeTiles = () => {
+    for (let i = 0; i < 9; i++) {
+      const tile = document.createElement("div");
+      tile.classList.add("tile");
+      tile.dataset.index = i;
+      tile.dataset.status = 0;
+
+      const X = document.createElement("span");
+      X.classList.add("x", "display-none");
+      X.dataset.index = i;
+      X.textContent = "X";
+
+      const O = document.createElement("span");
+      O.classList.add("o", "display-none");
+      O.dataset.index = i;
+      O.textContent = "O";
+
+      tile.appendChild(X);
+      tile.appendChild(O);
+      board.push(tile);
     }
+  };
 
-    //render tiles
-    const render = () => {
-        const gameBoard = document.querySelector(".game-board");
+  //render tiles
+  const render = () => {
+    const gameBoard = document.querySelector(".game-board");
 
-        board.forEach((tile) => {
-            gameBoard.appendChild(tile);
-        });
-    }
+    board.forEach((tile) => {
+      gameBoard.appendChild(tile);
+    });
+  };
 
-    // initiate the gameBoard object's functions
-    const init = () => {
-        makeTiles();
-        render();
-    }
-    
-    return {init}  
+  // initiate the gameBoard object's functions
+  const init = () => {
+    makeTiles();
+    render();
+  };
+
+  return { init };
 })();
-
 
 const gameController = (() => {
+  const player1 = "Player 1";
+  const player2 = "Player 2";
 
-    const player1 = "Player 1";
-    const player2 = "Player 2";
+  let currentPlayer = player1;
 
-    let currentPlayer = player1;
+  const consoleBtn = () => {
+    console.log("Hello world!");
+  };
 
-    const consoleBtn = () => {
-        console.log("Hello world!");
-    }
+  const checkIndex = (e) => {
+    e.addEventListener("click", () => console.log(e.dataset.index));
+  };
 
-    const checkIndex = (e) => {
-        e.addEventListener("click", () => console.log(e.dataset.index));
-    }
+  const turn = (e) => {
+    const index = e.dataset.index;
 
-    const turn = (e) => {
-        const index = e.dataset.index;
+    e.addEventListener("click", () => {
+      const X = e.childNodes[0];
+      const O = e.childNodes[1];
 
-        e.addEventListener("click", () => {
-            const X = e.childNodes[0];
-            const O = e.childNodes[1];
+      if (currentPlayer === player1 && e.dataset.status == 0) {
+        console.log(currentPlayer);
+        X.classList.toggle("display-none");
+        currentPlayer = player2;
+        e.dataset.status = 1;
+        console.log(e.dataset.status);
+      } else if (currentPlayer === player2 && e.dataset.status == 0) {
+        console.log(currentPlayer);
+        O.classList.toggle("display-none");
+        currentPlayer = player1;
+        e.dataset.status = 1;
+        console.log(e.dataset.status);
+      }
+    });
+  };
 
-            X.classList.toggle("display-none")
-        })
-    }
+  const events = () => {
+    const btn = document.querySelector("button");
+    const test = document.querySelectorAll(".tile");
 
-    const events = () => {
-        const btn = document.querySelector("button");
-        const test = document.querySelectorAll(".tile");
+    btn.addEventListener("click", consoleBtn);
+    test.forEach((tile) => {
+      // checkIndex(tile);
+      turn(tile);
+    });
+  };
 
-        btn.addEventListener("click", consoleBtn);
-        test.forEach((tile) => {
-            // checkIndex(tile);
-            turn(tile);
-        });
-    };
+  const init = () => {
+    events();
+  };
 
-    const init = () => {
-        events();
-    }
-
-    return{init};
+  return { init };
 })();
-
 
 gameBoard.init();
 gameController.init();
