@@ -49,12 +49,21 @@ const gameController = (() => {
 
   let currentPlayer = player1;
 
-  const consoleBtn = () => {
-    console.log("Hello world!");
-  };
+  const reset = () => {
+    console.log("Hello, world!");
+    const test = document.querySelectorAll(".tile");
 
-  const checkIndex = (e) => {
-    e.addEventListener("click", () => console.log(e.dataset.index));
+    test.forEach((tile) => {
+      const X = tile.childNodes[0];
+      const O = tile.childNodes[1];
+
+      X.classList.add("display-none");
+      O.classList.add("display-none");
+
+      tile.dataset.status = 0;
+    });
+
+    currentPlayer = player1;
   };
 
   const turn = (e) => {
@@ -84,9 +93,8 @@ const gameController = (() => {
     const btn = document.querySelector("button");
     const test = document.querySelectorAll(".tile");
 
-    btn.addEventListener("click", consoleBtn);
+    btn.addEventListener("click", reset);
     test.forEach((tile) => {
-      // checkIndex(tile);
       turn(tile);
     });
   };
