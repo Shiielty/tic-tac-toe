@@ -53,6 +53,7 @@ const gameController = (() => {
 
   let currentPlayer = firstPlayer;
 
+  //reset board
   const reset = () => {
     console.log("Reset the board...");
     const tiles = document.querySelectorAll(".tile");
@@ -70,6 +71,7 @@ const gameController = (() => {
     currentPlayer = firstPlayer;
   };
 
+  // event where user click the board
   const turn = (e) => {
     const index = e.dataset.index;
 
@@ -91,6 +93,7 @@ const gameController = (() => {
     });
   };
   
+  // checking if a player win the game
   const checkWin = () => {
     console.log("Checking winning status...")
     const tiles = document.querySelectorAll(".tile");
@@ -109,6 +112,7 @@ const gameController = (() => {
     }
   };
 
+  // list of events
   const events = () => {
     const resetBtn = document.querySelector("button");
     const tiles = document.querySelectorAll(".tile");
@@ -119,6 +123,7 @@ const gameController = (() => {
     });
   };
 
+  // initiate the gameController objects' functions
   const init = () => {
     events();
   };
