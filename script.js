@@ -107,9 +107,27 @@ const gameController = (() => {
       tileValue[tileNumber] = tileStatus;
     });
 
-    if (tileValue[0] == "o" && tileValue[1] == "o" && tileValue[2] == "o") {
+    if ((tileValue[0] == "o" && tileValue[1] == "o" && tileValue[2] == "o") ||
+        (tileValue[3] == "o" && tileValue[4] == "o" && tileValue[5] == "o") || 
+        (tileValue[6] == "o" && tileValue[7] == "o" && tileValue[8] == "o") ||
+        (tileValue[0] == "o" && tileValue[3] == "o" && tileValue[6] == "o") ||
+        (tileValue[1] == "o" && tileValue[4] == "o" && tileValue[7] == "o") || 
+        (tileValue[2] == "o" && tileValue[5] == "o" && tileValue[8] == "o") ||
+        (tileValue[0] == "o" && tileValue[4] == "o" && tileValue[8] == "o") ||
+        (tileValue[2] == "o" && tileValue[4] == "o" && tileValue[8] == "o")) {
       console.log(`${secondPlayer} Win!`)
-    }
+    } else if ((tileValue[0] == "x" && tileValue[1] == "x" && tileValue[2] == "x") ||
+               (tileValue[3] == "x" && tileValue[4] == "x" && tileValue[5] == "x") || 
+               (tileValue[6] == "x" && tileValue[7] == "x" && tileValue[8] == "x") ||
+               (tileValue[0] == "x" && tileValue[3] == "x" && tileValue[6] == "x") ||
+               (tileValue[1] == "x" && tileValue[4] == "x" && tileValue[7] == "x") || 
+               (tileValue[2] == "x" && tileValue[5] == "x" && tileValue[8] == "x") ||
+               (tileValue[0] == "x" && tileValue[4] == "x" && tileValue[8] == "x") ||
+               (tileValue[2] == "x" && tileValue[4] == "x" && tileValue[8] == "x")) 
+               {
+                 console.log(`${firstPlayer} Win!`)
+               };
+    
   };
 
   // list of events
