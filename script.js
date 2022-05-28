@@ -46,16 +46,18 @@ const gameBoard = (() => {
 })();
 
 const gameController = (() => {
-  const player1 = "Player 1";
-  const player2 = "Player 2";
+  const firstPlayer = "Player 1";
+  const secondPlayer = "Player 2";
+  let firstPlayerScores = 0;
+  let secondPlayerScores = 0; 
 
-  let currentPlayer = player1;
+  let currentPlayer = firstPlayer;
 
   const reset = () => {
-    console.log("Hello, world!");
-    const test = document.querySelectorAll(".tile");
+    console.log("Reset the board...");
+    const tiles = document.querySelectorAll(".tile");
 
-    test.forEach((tile) => {
+    tiles.forEach((tile) => {
       const X = tile.childNodes[0];
       const O = tile.childNodes[1];
 
@@ -65,7 +67,7 @@ const gameController = (() => {
       tile.dataset.status = 0;
     });
 
-    currentPlayer = player1;
+    currentPlayer = firstPlayer;
   };
 
   const turn = (e) => {
@@ -75,20 +77,36 @@ const gameController = (() => {
       const X = e.childNodes[0];
       const O = e.childNodes[1];
 
-      if (currentPlayer === player1 && e.dataset.status == 0) {
-        console.log(currentPlayer);
+      if (currentPlayer === firstPlayer && e.dataset.status == 0) {
         X.classList.toggle("display-none");
-        currentPlayer = player2;
-        e.dataset.status = 1;
-        console.log(e.dataset.status);
-      } else if (currentPlayer === player2 && e.dataset.status == 0) {
-        console.log(currentPlayer);
+        currentPlayer = secondPlayer;
+        e.dataset.status = "x";
+      } else if (currentPlayer === secondPlayer && e.dataset.status == 0) {
         O.classList.toggle("display-none");
-        currentPlayer = player1;
-        e.dataset.status = 1;
-        console.log(e.dataset.status);
+        currentPlayer = firstPlayer;
+        e.dataset.status = "o";
       }
+
+      checkWin();
     });
+  };
+  
+  const checkWin = () => {
+    console.log("Checking winning status...")
+    const tiles = document.querySelectorAll(".tile");
+
+    // check tile status and put it in the tileValue array
+    const tileValue = [];
+    tiles.forEach((tile) => {
+      tileNumber = tile.dataset.index;
+      tileStatus = tile.dataset.status;
+
+      tileValue[tileNumber] = tileStatus;
+    });
+
+    if (tileValue[0] == "o" && tileValue[1] == "o" && tileValue[2] == "o") {
+      console.log(`${secondPlayer} Win!`)
+    }
   };
 
   const events = () => {
