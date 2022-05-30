@@ -71,7 +71,7 @@ const gameController = (() => {
     currentPlayer = firstPlayer;
   };
 
-  // event where user click the board
+  // event when user click the board
   const turn = (e) => {
     const index = e.dataset.index;
 
@@ -89,7 +89,15 @@ const gameController = (() => {
         e.dataset.status = "o";
       }
 
-      checkWin();
+      let whoWin = checkWin();
+
+      if (whoWin === firstPlayer) {
+        console.log(`${firstPlayer} Win!`)
+        reset();
+      } else if (whoWin === secondPlayer) {
+        console.log(`${secondPlayer} Win!`)
+        reset();
+      }
     });
   };
   
@@ -115,7 +123,8 @@ const gameController = (() => {
         (tileValue[2] == "o" && tileValue[5] == "o" && tileValue[8] == "o") ||
         (tileValue[0] == "o" && tileValue[4] == "o" && tileValue[8] == "o") ||
         (tileValue[2] == "o" && tileValue[4] == "o" && tileValue[8] == "o")) {
-      console.log(`${secondPlayer} Win!`)
+      return secondPlayer;
+      // console.log(`${secondPlayer} Win!`)
     } else if ((tileValue[0] == "x" && tileValue[1] == "x" && tileValue[2] == "x") ||
                (tileValue[3] == "x" && tileValue[4] == "x" && tileValue[5] == "x") || 
                (tileValue[6] == "x" && tileValue[7] == "x" && tileValue[8] == "x") ||
@@ -125,7 +134,8 @@ const gameController = (() => {
                (tileValue[0] == "x" && tileValue[4] == "x" && tileValue[8] == "x") ||
                (tileValue[2] == "x" && tileValue[4] == "x" && tileValue[8] == "x")) 
                {
-                 console.log(`${firstPlayer} Win!`)
+                 return firstPlayer;
+                //  console.log(`${firstPlayer} Win!`)
                };
     
   };
