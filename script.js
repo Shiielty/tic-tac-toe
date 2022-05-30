@@ -50,10 +50,11 @@ const gameController = (() => {
   const secondPlayer = "Player 2";
   let firstPlayerScores = 0;
   let secondPlayerScores = 0; 
+  let whoWin = "";
 
   let currentPlayer = firstPlayer;
 
-  //reset board
+  // reset the board
   const reset = () => {
     console.log("Reset the board...");
     const tiles = document.querySelectorAll(".tile");
@@ -69,41 +70,50 @@ const gameController = (() => {
     });
 
     currentPlayer = firstPlayer;
+    whoWin = "";
   };
+
+  // freeze the board when someone win.
+  // const freeze = () => {
+  //   console.log("Freezing the board...");
+  // }
 
   // event when user click the board
   const turn = (e) => {
     const index = e.dataset.index;
 
-    e.addEventListener("click", () => {
-      const X = e.childNodes[0];
-      const O = e.childNodes[1];
-
-      if (currentPlayer === firstPlayer && e.dataset.status == 0) {
-        X.classList.toggle("display-none");
-        currentPlayer = secondPlayer;
-        e.dataset.status = "x";
-      } else if (currentPlayer === secondPlayer && e.dataset.status == 0) {
-        O.classList.toggle("display-none");
-        currentPlayer = firstPlayer;
-        e.dataset.status = "o";
-      }
-
-      let whoWin = checkWin();
-
-      if (whoWin === firstPlayer) {
-        console.log(`${firstPlayer} Win!`)
-        reset();
-      } else if (whoWin === secondPlayer) {
-        console.log(`${secondPlayer} Win!`)
-        reset();
-      }
-    });
+    if (whoWin === "") {
+      e.addEventListener("click", () => {
+        const X = e.childNodes[0];
+        const O = e.childNodes[1];
+  
+        if (currentPlayer === firstPlayer && e.dataset.status == 0 && whoWin === "") {
+          X.classList.toggle("display-none");
+          currentPlayer = secondPlayer;
+          e.dataset.status = "x";
+        } else if (currentPlayer === secondPlayer && e.dataset.status == 0 && whoWin == "") {
+          O.classList.toggle("display-none");
+          currentPlayer = firstPlayer;
+          e.dataset.status = "o";
+        }
+  
+        whoWin = checkWin();
+  
+        if (whoWin === firstPlayer) {
+          console.log(`${firstPlayer} Win!`)
+        } else if (whoWin === secondPlayer) {
+          console.log(`${secondPlayer} Win!`)
+        } else if (whoWin === "draw") {
+          console.log("DRAW");
+        }
+      });
+    }
+    
   };
   
   // checking if a player win the game
   const checkWin = () => {
-    console.log("Checking winning status...")
+    // console.log("Checking winning status...")
     const tiles = document.querySelectorAll(".tile");
 
     // check tile status and put it in the tileValue array
@@ -122,7 +132,7 @@ const gameController = (() => {
         (tileValue[1] == "o" && tileValue[4] == "o" && tileValue[7] == "o") || 
         (tileValue[2] == "o" && tileValue[5] == "o" && tileValue[8] == "o") ||
         (tileValue[0] == "o" && tileValue[4] == "o" && tileValue[8] == "o") ||
-        (tileValue[2] == "o" && tileValue[4] == "o" && tileValue[8] == "o")) {
+        (tileValue[2] == "o" && tileValue[4] == "o" && tileValue[6] == "o")) {
       return secondPlayer;
       // console.log(`${secondPlayer} Win!`)
     } else if ((tileValue[0] == "x" && tileValue[1] == "x" && tileValue[2] == "x") ||
@@ -132,11 +142,23 @@ const gameController = (() => {
                (tileValue[1] == "x" && tileValue[4] == "x" && tileValue[7] == "x") || 
                (tileValue[2] == "x" && tileValue[5] == "x" && tileValue[8] == "x") ||
                (tileValue[0] == "x" && tileValue[4] == "x" && tileValue[8] == "x") ||
-               (tileValue[2] == "x" && tileValue[4] == "x" && tileValue[8] == "x")) 
+               (tileValue[2] == "x" && tileValue[4] == "x" && tileValue[6] == "x")) 
                {
                  return firstPlayer;
                 //  console.log(`${firstPlayer} Win!`)
-               };
+    } else if ((tileValue[0] != 0 && tileValue[1] != 0 && tileValue[2] != 0) &&
+              (tileValue[3] != 0 && tileValue[4] != 0 && tileValue[5] != 0) && 
+              (tileValue[6] != 0 && tileValue[7] != 0 && tileValue[8] != 0) &&
+              (tileValue[0] != 0 && tileValue[3] != 0 && tileValue[6] != 0) &&
+              (tileValue[1] != 0 && tileValue[4] != 0 && tileValue[7] != 0) && 
+              (tileValue[2] != 0 && tileValue[5] != 0 && tileValue[8] != 0) &&
+              (tileValue[0] != 0 && tileValue[4] != 0 && tileValue[8] != 0) &&
+              (tileValue[2] != 0 && tileValue[4] != 0 && tileValue[6] != 0)) 
+              {
+                return "draw";
+    } else return "";
+    
+    
     
   };
 
