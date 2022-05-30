@@ -73,25 +73,20 @@ const gameController = (() => {
     whoWin = "";
   };
 
-  // freeze the board when someone win.
-  // const freeze = () => {
-  //   console.log("Freezing the board...");
-  // }
-
-  // event when user click the board
+  // event triggered when user click the board
   const turn = (e) => {
-    const index = e.dataset.index;
-
-    if (whoWin === "") {
-      e.addEventListener("click", () => {
+    // const index = e.dataset.index;
+    
+    e.addEventListener("click", () => {
+      if (whoWin === "") {
         const X = e.childNodes[0];
         const O = e.childNodes[1];
   
-        if (currentPlayer === firstPlayer && e.dataset.status == 0 && whoWin === "") {
+        if (currentPlayer === firstPlayer && e.dataset.status == 0) {
           X.classList.toggle("display-none");
           currentPlayer = secondPlayer;
           e.dataset.status = "x";
-        } else if (currentPlayer === secondPlayer && e.dataset.status == 0 && whoWin == "") {
+        } else if (currentPlayer === secondPlayer && e.dataset.status == 0) {
           O.classList.toggle("display-none");
           currentPlayer = firstPlayer;
           e.dataset.status = "o";
@@ -106,8 +101,10 @@ const gameController = (() => {
         } else if (whoWin === "draw") {
           console.log("DRAW");
         }
-      });
-    }
+      }
+      
+    });
+    
     
   };
   
