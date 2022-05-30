@@ -89,3 +89,18 @@ h1 {
 .display-none {
   display: none;
 }
+
+.result-bg {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  width: 310px;
+  height: 310px;
+  background-color: hsla(0, 0%, 0%, 0.8);
+}
+
+.result-msg {
+  width: 100%;
+  text-align: center;
+  color: white;
+}
