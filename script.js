@@ -50,13 +50,14 @@ const gameController = (() => {
   const secondPlayer = "Player 2";
   let firstPlayerScores = 0;
   let secondPlayerScores = 0; 
-  let whoWin = "";
+  let result = "";
 
   let currentPlayer = firstPlayer;
 
   // reset the board
   const reset = () => {
     console.log("Reset the board...");
+    const gameBoard = document.querySelector(".game-board")
     const tiles = document.querySelectorAll(".tile");
 
     tiles.forEach((tile) => {
@@ -70,7 +71,11 @@ const gameController = (() => {
     });
 
     currentPlayer = firstPlayer;
-    whoWin = "";
+    result = "";
+    if (gameBoard.firstChild.classList.value === "result-bg") {
+      const resultElement = document.querySelector(".result-bg");
+      resultElement.remove();
+    }
   };
 
   // event triggered when user click the board
@@ -78,7 +83,7 @@ const gameController = (() => {
     // const index = e.dataset.index;
     
     e.addEventListener("click", () => {
-      if (whoWin === "") {
+      if (result === "") {
         const X = e.childNodes[0];
         const O = e.childNodes[1];
   
@@ -92,14 +97,14 @@ const gameController = (() => {
           e.dataset.status = "o";
         }
   
-        whoWin = checkWin();
+        result = checkWin();
   
-        if (whoWin === firstPlayer) {
-          console.log(`${firstPlayer} Win!`)
-        } else if (whoWin === secondPlayer) {
-          console.log(`${secondPlayer} Win!`)
-        } else if (whoWin === "draw") {
-          console.log("DRAW");
+        if (result === firstPlayer) {
+          resultMessage(result);
+        } else if (result === secondPlayer) {
+          resultMessage(result);
+        } else if (result === "draw") {
+          resultMessage(result);
         }
       }
       
@@ -157,6 +162,24 @@ const gameController = (() => {
     
     
     
+  };
+
+  const resultMessage = (e) => {
+    const gameBoard = document.querySelector(".game-board");
+    const resultBg = document.createElement("div");
+    const resultMsg = document.createElement("p");
+
+    resultBg.classList.add("result-bg");
+    resultMsg.classList.add("result-msg")
+
+    if (e === "draw") {
+      resultMsg.textContent = "DRAW!"
+    } else {
+      resultMsg.textContent = `${e} WIN THE GAME!`
+    }
+
+    gameBoard.insertBefore(resultBg, gameBoard.firstChild);
+    resultBg.appendChild(resultMsg);
   };
 
   // list of events
