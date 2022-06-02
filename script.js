@@ -1,6 +1,11 @@
 const gameBoard = (() => {
   const board = [];
 
+  // create menu for naming players
+  const createMenu = () => {
+    console.log("create menu...")
+  };
+
   //create tiles
   const makeTiles = () => {
     for (let i = 0; i < 9; i++) {
