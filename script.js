@@ -74,11 +74,38 @@ const gameMenu = (() => {
     start();
   };
 
-  return { init };
+  return { init, playerNames };
 })();
 
 const gameBoard = (() => {
+  // cached DOM & create game-board div
+  const wrapper = document.querySelector(".wrapper");
+
+  const info = [];
   const board = [];
+
+  const createInfo = () => {
+    const gameInfo = document.createElement("div");
+    const firstPlayerName = document.createElement("span");
+    const secondPlayerName = document.createElement("span");
+    const resetBtn = document.createElement("button");
+    const gameBoard = document.createElement("div");
+
+    gameInfo.classList.add("game-info");
+    resetBtn.classList.add("reset");
+    gameBoard.classList.add("game-board");
+    
+    firstPlayerName.textContent = `${gameMenu.playerNames[0]} v`;
+    secondPlayerName.textContent = `s ${gameMenu.playerNames[1]}`;
+    resetBtn.textContent = "RESET"
+    
+    gameInfo.appendChild(firstPlayerName);
+    gameInfo.appendChild(secondPlayerName);
+    
+    info.push(gameInfo);
+    info.push(resetBtn);
+    info.push(gameBoard);
+  }
 
   //create tiles
   const makeTiles = () => {
@@ -106,19 +133,22 @@ const gameBoard = (() => {
 
   //render tiles
   const render = () => {
+
+    info.forEach((info) => wrapper.appendChild(info));
+
     const gameBoard = document.querySelector(".game-board");
 
-    if (!gameBoard.hasChildNodes()) {
-      board.forEach((tile) => {
-        gameBoard.appendChild(tile);
-      });
-    }
+    board.forEach((tile) => {
+      gameBoard.appendChild(tile);
+    });
   };
 
   // initiate the gameBoard object's functions
   const init = () => {
+    createInfo();
     makeTiles();
     render();
+    gameController.init();
   };
 
   return { init };
@@ -296,4 +326,3 @@ const gameController = (() => {
 
 // gameBoard.init();
 gameMenu.init();
-gameController.init();
