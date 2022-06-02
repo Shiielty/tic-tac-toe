@@ -1,10 +1,84 @@
-const gameBoard = (() => {
-  const board = [];
+const gameMenu = (() => {
+  // cached DOM
+  const wrapper = document.querySelector(".wrapper");
+  const gameMenu = document.createElement("div");
+  gameMenu.classList.add("game-menu");
+  wrapper.appendChild(gameMenu);
+
+  const menu = [];
+  const playerNames = [];
 
   // create menu for naming players
   const createMenu = () => {
-    console.log("create menu...")
+    const p = document.createElement("p");
+    p.textContent = "Choose Your Character";
+    menu.push(p);
+
+    for (let i = 0; i < 2; i++) {
+      const div = document.createElement("div");
+      const playerBtn = document.createElement("button");
+      const playerName = document.createElement("input");
+
+      div.classList.add("choose-player");
+      playerName.setAttribute("type", "text");
+      if (i == 0) {
+        playerBtn.textContent = "X";
+        playerName.setAttribute("value", "Player 1");
+      } else {
+        playerBtn.textContent = "O";
+        playerName.setAttribute("value", "player 2");
+      }
+
+      div.appendChild(playerBtn);
+      div.appendChild(playerName);
+      menu.push(div);
+    }
+
+    const startBtn = document.createElement("button");
+    startBtn.classList.add("start-btn");
+    startBtn.textContent = "START";
+    menu.push(startBtn);
   };
+
+  const render = () => {
+    menu.forEach((menu) => {
+      gameMenu.appendChild(menu);
+    });
+  };
+
+  const start = () => {
+    const startBtn = document.querySelector(".start-btn");
+    const playerNameInput = document.querySelectorAll(".choose-player input");
+
+    startBtn.addEventListener("click", () => {
+      playerNames.splice(0, playerNames.length);
+
+      playerNameInput.forEach((input) => {
+        if (playerNameInput[0].value == "") {
+          playerNameInput[0].value = "Player 1";
+        } else if (playerNameInput[1].value == "") {
+          playerNameInput[1].value = "Player 2";
+        }
+        playerNames.push(input.value);
+        console.log(playerNames);
+      });
+
+      gameMenu.remove();
+      gameBoard.init();
+    });
+  };
+
+  const init = () => {
+    createMenu();
+    render();
+    start();
+  };
+
+  return { init };
+})();
+
+const gameBoard = (() => {
+  const board = [];
 
   //create tiles
   const makeTiles = () => {
@@ -54,7 +128,7 @@ const gameController = (() => {
   const firstPlayer = "Player 1";
   const secondPlayer = "Player 2";
   let firstPlayerScores = 0;
-  let secondPlayerScores = 0; 
+  let secondPlayerScores = 0;
   let result = "";
 
   let currentPlayer = firstPlayer;
@@ -62,7 +136,7 @@ const gameController = (() => {
   // reset the board
   const reset = () => {
     console.log("Reset the board...");
-    const gameBoard = document.querySelector(".game-board")
+    const gameBoard = document.querySelector(".game-board");
     const tiles = document.querySelectorAll(".tile");
 
     tiles.forEach((tile) => {
@@ -86,12 +160,12 @@ const gameController = (() => {
   // event triggered when user click the board
   const turn = (e) => {
     // const index = e.dataset.index;
-    
+
     e.addEventListener("click", () => {
       if (result === "") {
         const X = e.childNodes[0];
         const O = e.childNodes[1];
-  
+
         if (currentPlayer === firstPlayer && e.dataset.status == 0) {
           X.classList.toggle("display-none");
           currentPlayer = secondPlayer;
@@ -101,9 +175,9 @@ const gameController = (() => {
           currentPlayer = firstPlayer;
           e.dataset.status = "o";
         }
-  
+
         result = checkWin();
-  
+
         if (result === firstPlayer) {
           resultMessage(result);
         } else if (result === secondPlayer) {
@@ -112,12 +186,9 @@ const gameController = (() => {
           resultMessage(result);
         }
       }
-      
     });
-    
-    
   };
-  
+
   // checking if a player win the game
   const checkWin = () => {
     // console.log("Checking winning status...")
@@ -132,41 +203,58 @@ const gameController = (() => {
       tileValue[tileNumber] = tileStatus;
     });
 
-    if ((tileValue[0] == "o" && tileValue[1] == "o" && tileValue[2] == "o") ||
-        (tileValue[3] == "o" && tileValue[4] == "o" && tileValue[5] == "o") || 
-        (tileValue[6] == "o" && tileValue[7] == "o" && tileValue[8] == "o") ||
-        (tileValue[0] == "o" && tileValue[3] == "o" && tileValue[6] == "o") ||
-        (tileValue[1] == "o" && tileValue[4] == "o" && tileValue[7] == "o") || 
-        (tileValue[2] == "o" && tileValue[5] == "o" && tileValue[8] == "o") ||
-        (tileValue[0] == "o" && tileValue[4] == "o" && tileValue[8] == "o") ||
-        (tileValue[2] == "o" && tileValue[4] == "o" && tileValue[6] == "o")) {
+    if (
+      (tileValue[0] == "o" && tileValue[1] == "o" && tileValue[2] == "o") ||
+      (tileValue[3] == "o" && tileValue[4] == "o" && tileValue[5] == "o") ||
+      (tileValue[6] == "o" && tileValue[7] == "o" && tileValue[8] == "o") ||
+      (tileValue[0] == "o" && tileValue[3] == "o" && tileValue[6] == "o") ||
+      (tileValue[1] == "o" && tileValue[4] == "o" && tileValue[7] == "o") ||
+      (tileValue[2] == "o" && tileValue[5] == "o" && tileValue[8] == "o") ||
+      (tileValue[0] == "o" && tileValue[4] == "o" && tileValue[8] == "o") ||
+      (tileValue[2] == "o" && tileValue[4] == "o" && tileValue[6] == "o")
+    ) {
       return secondPlayer;
       // console.log(`${secondPlayer} Win!`)
-    } else if ((tileValue[0] == "x" && tileValue[1] == "x" && tileValue[2] == "x") ||
-               (tileValue[3] == "x" && tileValue[4] == "x" && tileValue[5] == "x") || 
-               (tileValue[6] == "x" && tileValue[7] == "x" && tileValue[8] == "x") ||
-               (tileValue[0] == "x" && tileValue[3] == "x" && tileValue[6] == "x") ||
-               (tileValue[1] == "x" && tileValue[4] == "x" && tileValue[7] == "x") || 
-               (tileValue[2] == "x" && tileValue[5] == "x" && tileValue[8] == "x") ||
-               (tileValue[0] == "x" && tileValue[4] == "x" && tileValue[8] == "x") ||
-               (tileValue[2] == "x" && tileValue[4] == "x" && tileValue[6] == "x")) 
-               {
-                 return firstPlayer;
-                //  console.log(`${firstPlayer} Win!`)
-    } else if ((tileValue[0] != 0 && tileValue[1] != 0 && tileValue[2] != 0) &&
-              (tileValue[3] != 0 && tileValue[4] != 0 && tileValue[5] != 0) && 
-              (tileValue[6] != 0 && tileValue[7] != 0 && tileValue[8] != 0) &&
-              (tileValue[0] != 0 && tileValue[3] != 0 && tileValue[6] != 0) &&
-              (tileValue[1] != 0 && tileValue[4] != 0 && tileValue[7] != 0) && 
-              (tileValue[2] != 0 && tileValue[5] != 0 && tileValue[8] != 0) &&
-              (tileValue[0] != 0 && tileValue[4] != 0 && tileValue[8] != 0) &&
-              (tileValue[2] != 0 && tileValue[4] != 0 && tileValue[6] != 0)) 
-              {
-                return "draw";
+    } else if (
+      (tileValue[0] == "x" && tileValue[1] == "x" && tileValue[2] == "x") ||
+      (tileValue[3] == "x" && tileValue[4] == "x" && tileValue[5] == "x") ||
+      (tileValue[6] == "x" && tileValue[7] == "x" && tileValue[8] == "x") ||
+      (tileValue[0] == "x" && tileValue[3] == "x" && tileValue[6] == "x") ||
+      (tileValue[1] == "x" && tileValue[4] == "x" && tileValue[7] == "x") ||
+      (tileValue[2] == "x" && tileValue[5] == "x" && tileValue[8] == "x") ||
+      (tileValue[0] == "x" && tileValue[4] == "x" && tileValue[8] == "x") ||
+      (tileValue[2] == "x" && tileValue[4] == "x" && tileValue[6] == "x")
+    ) {
+      return firstPlayer;
+      //  console.log(`${firstPlayer} Win!`)
+    } else if (
+      tileValue[0] != 0 &&
+      tileValue[1] != 0 &&
+      tileValue[2] != 0 &&
+      tileValue[3] != 0 &&
+      tileValue[4] != 0 &&
+      tileValue[5] != 0 &&
+      tileValue[6] != 0 &&
+      tileValue[7] != 0 &&
+      tileValue[8] != 0 &&
+      tileValue[0] != 0 &&
+      tileValue[3] != 0 &&
+      tileValue[6] != 0 &&
+      tileValue[1] != 0 &&
+      tileValue[4] != 0 &&
+      tileValue[7] != 0 &&
+      tileValue[2] != 0 &&
+      tileValue[5] != 0 &&
+      tileValue[8] != 0 &&
+      tileValue[0] != 0 &&
+      tileValue[4] != 0 &&
+      tileValue[8] != 0 &&
+      tileValue[2] != 0 &&
+      tileValue[4] != 0 &&
+      tileValue[6] != 0
+    ) {
+      return "draw";
     } else return "";
-    
-    
-    
   };
 
   const resultMessage = (e) => {
@@ -175,12 +263,12 @@ const gameController = (() => {
     const resultMsg = document.createElement("p");
 
     resultBg.classList.add("result-bg");
-    resultMsg.classList.add("result-msg")
+    resultMsg.classList.add("result-msg");
 
     if (e === "draw") {
-      resultMsg.textContent = "DRAW!"
+      resultMsg.textContent = "DRAW!";
     } else {
-      resultMsg.textContent = `${e} WIN THE GAME!`
+      resultMsg.textContent = `${e} WIN THE GAME!`;
     }
 
     gameBoard.insertBefore(resultBg, gameBoard.firstChild);
@@ -206,5 +294,6 @@ const gameController = (() => {
   return { init };
 })();
 
-gameBoard.init();
+// gameBoard.init();
+gameMenu.init();
 gameController.init();
