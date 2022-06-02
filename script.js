@@ -1,3 +1,13 @@
+// using 'names' instead 'name' because 'name' is marked as deprecated.
+const Player = (names) => {
+
+  const getName = () => {
+    return names;
+  };
+  
+  return { getName }
+}
+
 const gameMenu = (() => {
   // cached DOM && create game-menu div
   const wrapper = document.querySelector(".wrapper");
