@@ -60,7 +60,6 @@ const gameMenu = (() => {
           playerNameInput[1].value = "Player 2";
         }
         playerNames.push(input.value);
-        console.log(playerNames);
       });
 
       gameMenu.remove();
@@ -157,8 +156,12 @@ const gameBoard = (() => {
 const gameController = (() => {
   const firstPlayer = "Player 1";
   const secondPlayer = "Player 2";
-  let firstPlayerScores = 0;
-  let secondPlayerScores = 0;
+  // const testing = gameMenu.playerNames;
+  // const player1 = gameMenu.playerNames[0];
+  // const player2 = gameMenu.playerNames[0];
+  
+  // let firstPlayerScores = 0;
+  // let secondPlayerScores = 0;
   let result = "";
 
   let currentPlayer = firstPlayer;
@@ -189,8 +192,7 @@ const gameController = (() => {
 
   // event triggered when user click the board
   const turn = (e) => {
-    // const index = e.dataset.index;
-
+    console.log(e);
     e.addEventListener("click", () => {
       if (result === "") {
         const X = e.childNodes[0];
@@ -307,7 +309,7 @@ const gameController = (() => {
 
   // list of events
   const events = () => {
-    const resetBtn = document.querySelector("button");
+    const resetBtn = document.querySelector(".reset");
     const tiles = document.querySelectorAll(".tile");
 
     resetBtn.addEventListener("click", reset);
@@ -318,6 +320,8 @@ const gameController = (() => {
 
   // initiate the gameController objects' functions
   const init = () => {
+    // console.log(gameMenu.playerNames[0], gameMenu.playerNames[1]);
+    // console.log(testing, player1, player2);
     events();
   };
 
