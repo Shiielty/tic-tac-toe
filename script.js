@@ -14,7 +14,8 @@ const gameMenu = (() => {
   wrapper.appendChild(gameMenu);
 
   const menu = [];
-  const playerNames = [];
+  const defaultName1 = Player("Player 1").getName();
+  const defaultName2 = Player("Player 2").getName();
 
   // create menu for naming players
   const createMenu = () => {
@@ -61,7 +62,6 @@ const gameMenu = (() => {
     const playerNameInput = document.querySelectorAll(".choose-player input");
 
     startBtn.addEventListener("click", () => {
-      playerNames.splice(0, playerNames.length);
 
       playerNameInput.forEach((input) => {
         if (playerNameInput[0].value == "") {
@@ -69,7 +69,6 @@ const gameMenu = (() => {
         } else if (playerNameInput[1].value == "") {
           playerNameInput[1].value = "Player 2";
         }
-        playerNames.push(input.value);
       });
 
       gameMenu.remove();
@@ -84,7 +83,7 @@ const gameMenu = (() => {
     start();
   };
 
-  return { init, playerNames };
+  return { init };
 })();
 
 const gameBoard = (() => {
