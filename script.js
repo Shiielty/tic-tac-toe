@@ -1,5 +1,5 @@
 const gameMenu = (() => {
-  // cached DOM
+  // cached DOM && create game-menu div
   const wrapper = document.querySelector(".wrapper");
   const gameMenu = document.createElement("div");
   gameMenu.classList.add("game-menu");
@@ -40,12 +40,14 @@ const gameMenu = (() => {
     menu.push(startBtn);
   };
 
+  // render menu
   const render = () => {
     menu.forEach((menu) => {
       gameMenu.appendChild(menu);
     });
   };
 
+  // start button's event: get player names, remove menu, initiate gameBoard object
   const start = () => {
     const startBtn = document.querySelector(".start-btn");
     const playerNameInput = document.querySelectorAll(".choose-player input");
@@ -67,6 +69,7 @@ const gameMenu = (() => {
     });
   };
 
+  // initiate gameMenu object
   const init = () => {
     createMenu();
     render();
@@ -77,12 +80,13 @@ const gameMenu = (() => {
 })();
 
 const gameBoard = (() => {
-  // cached DOM & create game-board div
+  // cached DOM
   const wrapper = document.querySelector(".wrapper");
 
   const info = [];
   const board = [];
 
+  // create infos section: players name, reset button & gameBoard div
   const createInfo = () => {
     const gameInfo = document.createElement("div");
     const firstPlayerName = document.createElement("span");
@@ -106,7 +110,7 @@ const gameBoard = (() => {
     info.push(gameBoard);
   }
 
-  //create tiles
+  //create tiles for the gameBoard
   const makeTiles = () => {
     for (let i = 0; i < 9; i++) {
       const tile = document.createElement("div");
@@ -130,7 +134,7 @@ const gameBoard = (() => {
     }
   };
 
-  //render tiles
+  //render infos & tiles in gameBoard div
   const render = () => {
 
     info.forEach((info) => wrapper.appendChild(info));
@@ -142,7 +146,7 @@ const gameBoard = (() => {
     });
   };
 
-  // initiate the gameBoard object's functions
+  // initiate gameBoard object
   const init = () => {
     createInfo();
     makeTiles();
