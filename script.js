@@ -1,9 +1,7 @@
 // using 'names' instead 'name' because 'name' is marked as deprecated.
 const Player = (names) => {
 
-  const getName = () => {
-    return names;
-  };
+  const getName = () => names;
   
   return { getName }
 }
