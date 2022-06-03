@@ -357,8 +357,10 @@ const gameController = (() => {
     events();
   };
 
-  return { init };
-})();
+  init();
+
+  return {  };
+});
 
 // gameBoard.init();
 // gameMenu.init();
