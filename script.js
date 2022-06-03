@@ -195,7 +195,6 @@ const gameController = (() => {
 
   // reset the board
   const reset = () => {
-    console.log("Reset the board...");
     const gameBoard = document.querySelector(".game-board");
     const tiles = document.querySelectorAll(".tile");
 
@@ -219,7 +218,6 @@ const gameController = (() => {
 
   // event triggered when user click the board
   const turn = (e) => {
-    console.log(e);
     e.addEventListener("click", () => {
       if (result === "") {
         const X = e.childNodes[0];
@@ -250,7 +248,6 @@ const gameController = (() => {
 
   // checking if a player win the game
   const checkWin = () => {
-    // console.log("Checking winning status...")
     const tiles = document.querySelectorAll(".tile");
 
     // check tile status and put it in the tileValue array
@@ -273,7 +270,6 @@ const gameController = (() => {
       (tileValue[2] == "o" && tileValue[4] == "o" && tileValue[6] == "o")
     ) {
       return secondPlayer;
-      // console.log(`${secondPlayer} Win!`)
     } else if (
       (tileValue[0] == "x" && tileValue[1] == "x" && tileValue[2] == "x") ||
       (tileValue[3] == "x" && tileValue[4] == "x" && tileValue[5] == "x") ||
@@ -285,7 +281,6 @@ const gameController = (() => {
       (tileValue[2] == "x" && tileValue[4] == "x" && tileValue[6] == "x")
     ) {
       return firstPlayer;
-      //  console.log(`${firstPlayer} Win!`)
     } else if (
       tileValue[0] != 0 &&
       tileValue[1] != 0 &&
@@ -347,7 +342,6 @@ const gameController = (() => {
 
   // initiate the gameController objects' functions
   const init = () => {
-    // console.log(testing, gameMenu.getFirstName(), gameMenu.getSecondName())
     events();
   };
 
