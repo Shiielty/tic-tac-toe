@@ -1,9 +1,14 @@
 // using 'names' instead 'name' because 'name' is marked as deprecated.
-const Player = (names) => {
+const Player = (names, mark) => {
+  
+  let score = 0;
 
   const getName = () => names;
-  
-  return { getName }
+  const getMark = () => mark;
+  const win = () => score++;
+  const getScore = () => score;
+
+  return { getName, getMark, win, getScore }
 }
 
 const gameMenu = (() => {
