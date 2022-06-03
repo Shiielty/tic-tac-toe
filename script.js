@@ -20,6 +20,7 @@ const gameMenu = (() => {
 
   const menu = [];
   const playerNames = [];
+  const playerObjects = [];
 
   // create menu for naming players
   const createMenu = () => {
@@ -85,11 +86,14 @@ const gameMenu = (() => {
       playerNames.splice(0, playerNames.length);
       playerNames.push(playerNameInput[0].value);
       playerNames.push(playerNameInput[1].value);
+
+      playerObjects[0] = Player(playerNames[0], "x");
+      playerObjects[1] = Player(playerNames[1], "o");
     });
   }
-  
-  const getFirstName = () => playerNames[0];
-  const getSecondName = () => playerNames[1];
+
+  const getfirstPlayer = () => playerObjects[0];
+  const getSecondPlayer = () => playerObjects[1];
   
   // initiate gameMenu object
   const initMenu = () => {
@@ -113,7 +117,7 @@ const gameMenu = (() => {
   getNames();
   initBoard();
 
-  return { getFirstName, getSecondName};
+  return { getfirstPlayer, getSecondPlayer};
 })();
 
 const gameBoard = (() => {
@@ -123,8 +127,8 @@ const gameBoard = (() => {
   const info = [];
   const board = [];
 
-  const firstPlayer = Player(gameMenu.getFirstName(), "x");
-  const secondPlayer = Player(gameMenu.getSecondName(), "o")
+  const firstPlayer = gameMenu.getfirstPlayer();
+  const secondPlayer = gameMenu.getSecondPlayer();
 
   // create infos section: players name, reset button & gameBoard div
   const createInfo = () => {
@@ -198,8 +202,9 @@ const gameBoard = (() => {
 });
 
 const gameController = (() => {
-  const firstPlayer = Player(gameMenu.getFirstName(), "x");
-  const secondPlayer = Player(gameMenu.getSecondName(), "o")
+
+  const firstPlayer = gameMenu.getfirstPlayer();
+  const secondPlayer = gameMenu.getSecondPlayer();
   
   let result = "";
 
@@ -365,3 +370,4 @@ const gameController = (() => {
 
   init();
 });
+
