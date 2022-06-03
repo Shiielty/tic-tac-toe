@@ -18,15 +18,15 @@ const gameMenu = (() => {
   gameMenu.classList.add("game-menu");
   wrapper.appendChild(gameMenu);
 
-  const menu = [];
-  const playerNames = [];
+  const _menu = [];
+  const _playerNames = [];
   const playerObjects = [];
 
-  // create menu for naming players
+  // create _menu for naming players
   const createMenu = () => {
     const p = document.createElement("p");
     p.textContent = "Choose Your Character";
-    menu.push(p);
+    _menu.push(p);
 
     for (let i = 0; i < 2; i++) {
       const div = document.createElement("div");
@@ -45,18 +45,18 @@ const gameMenu = (() => {
 
       div.appendChild(playerBtn);
       div.appendChild(playerName);
-      menu.push(div);
+      _menu.push(div);
     }
 
     const startBtn = document.createElement("button");
     startBtn.classList.add("start-btn");
     startBtn.textContent = "START";
-    menu.push(startBtn);
+    _menu.push(startBtn);
   };
 
-  // render menu
+  // render _menu
   const render = () => {
-    menu.forEach((menu) => {
+    _menu.forEach((menu) => {
       gameMenu.appendChild(menu);
     });
   };
@@ -77,18 +77,18 @@ const gameMenu = (() => {
     });
   };
 
-  // get both name to the playerNames array, then invoke initBoard()
+  // get both name to the _playerNames array, then invoke initBoard()
   const getNames = () => {
     const startBtn = document.querySelector(".start-btn");
     const playerNameInput = document.querySelectorAll(".choose-player input");
     
     startBtn.addEventListener("click", () => {
-      playerNames.splice(0, playerNames.length);
-      playerNames.push(playerNameInput[0].value);
-      playerNames.push(playerNameInput[1].value);
+      _playerNames.splice(0, _playerNames.length);
+      _playerNames.push(playerNameInput[0].value);
+      _playerNames.push(playerNameInput[1].value);
 
-      playerObjects[0] = Player(playerNames[0], "x");
-      playerObjects[1] = Player(playerNames[1], "o");
+      playerObjects[0] = Player(_playerNames[0], "x");
+      playerObjects[1] = Player(_playerNames[1], "o");
     });
   }
 
@@ -101,7 +101,7 @@ const gameMenu = (() => {
     render();
   };
   
-  // remove menu element and initiate gameBoard objects
+  // remove _menu element and initiate gameBoard objects
   const initBoard = () => {
     const startBtn = document.querySelector(".start-btn");
 
