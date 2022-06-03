@@ -34,7 +34,7 @@ const gameMenu = (() => {
         playerName.setAttribute("value", "Player 1");
       } else {
         playerBtn.textContent = "O";
-        playerName.setAttribute("value", "player 2");
+        playerName.setAttribute("value", "Player 2");
       }
 
       div.appendChild(playerBtn);
