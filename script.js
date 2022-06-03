@@ -368,10 +368,10 @@ const gameController = (() => {
   };
   
   const backToMenu = () => {
+    resetBoard();
     gameInfo.remove();
     boardMenu.remove();
     gameBoard.remove();
-    resetBoard();
     startMenu.classList.remove("display-none");
   }
   
