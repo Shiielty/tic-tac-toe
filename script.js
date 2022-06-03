@@ -14,9 +14,9 @@ const Player = (names, mark) => {
 const gameMenu = (() => {
   // cached DOM && create game-menu div
   const wrapper = document.querySelector(".wrapper");
-  const gameMenu = document.createElement("div");
-  gameMenu.classList.add("game-menu");
-  wrapper.appendChild(gameMenu);
+  const startMenu = document.createElement("div");
+  startMenu.classList.add("start-menu");
+  wrapper.appendChild(startMenu);
 
   const _menu = [];
   const _playerNames = [];
@@ -57,7 +57,7 @@ const gameMenu = (() => {
   // render _menu
   const render = () => {
     _menu.forEach((menu) => {
-      gameMenu.appendChild(menu);
+      startMenu.appendChild(menu);
     });
   };
 
@@ -95,18 +95,22 @@ const gameMenu = (() => {
   const getfirstPlayer = () => playerObjects[0];
   const getSecondPlayer = () => playerObjects[1];
   
-  // initiate gameMenu object
+  // initiate startMenu object
   const initMenu = () => {
     createMenu();
     render();
   };
   
-  // remove _menu element and initiate gameBoard objects
+  // hide _menu element and initiate gameBoard objects
   const initBoard = () => {
     const startBtn = document.querySelector(".start-btn");
 
     startBtn.addEventListener("click", () => {
-      gameMenu.remove();
+      const playerNameInput = document.querySelectorAll(".choose-player input");
+      
+      startMenu.classList.add("display-none")
+      playerNameInput[0].value = "Player 1";
+      playerNameInput[1].value = "Player 2"; 
       gameBoard();
     })
   }
@@ -149,7 +153,7 @@ const gameBoard = (() => {
     secondPlayerScore.classList.add("player-score")
 
     boardMenu.classList.add("board-menu");
-    menuBtn.classList.add("board-menu-btn");
+    menuBtn.classList.add("board-menu-btn", "menu-btn");
     resetBtn.classList.add("board-menu-btn", "reset-btn")
     gameBoard.classList.add("game-board");
     
@@ -221,8 +225,15 @@ const gameBoard = (() => {
 
 const gameController = (() => {
   // cached DOM
+  const startMenu = document.querySelector(".start-menu");
+  const gameInfo = document.querySelector(".game-info");
+  const boardMenu = document.querySelector(".board-menu");
+  const gameBoard = document.querySelector(".game-board");
   const firstPlayerScore = document.querySelector("span:first-of-type");
   const secondPlayerScore = document.querySelector("span:last-of-type");
+  const menuBtn = document.querySelector(".menu-btn");
+  const resetBtn = document.querySelector(".reset-btn");
+  const tiles = document.querySelectorAll(".tile");
 
   const firstPlayer = gameMenu.getfirstPlayer();
   const secondPlayer = gameMenu.getSecondPlayer();
@@ -233,7 +244,6 @@ const gameController = (() => {
 
   // reset the board
   const reset = () => {
-    const gameBoard = document.querySelector(".game-board");
     const tiles = document.querySelectorAll(".tile");
 
     tiles.forEach((tile) => {
@@ -354,7 +364,6 @@ const gameController = (() => {
   };
 
   const resultMessage = (e) => {
-    const gameBoard = document.querySelector(".game-board");
     const resultBg = document.createElement("div");
     const resultMsg = document.createElement("p");
 
@@ -371,11 +380,17 @@ const gameController = (() => {
     resultBg.appendChild(resultMsg);
   };
 
+  const backToMenu = () => {
+    gameInfo.remove();
+    boardMenu.remove();
+    gameBoard.remove();
+    reset();
+    startMenu.classList.remove("display-none");
+  }
+
   // list of events
   const events = () => {
-    const resetBtn = document.querySelector(".reset-btn");
-    const tiles = document.querySelectorAll(".tile");
-
+    menuBtn.addEventListener("click", backToMenu);
     resetBtn.addEventListener("click", reset);
     tiles.forEach((tile) => {
       turn(tile);
