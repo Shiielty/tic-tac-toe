@@ -342,6 +342,7 @@ const gameController = (() => {
 
   // initiate the gameController objects' functions
   const init = () => {
+    // console.log(testing, gameMenu.getFirstName(), gameMenu.getSecondName())
     events();
   };
 
