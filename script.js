@@ -97,7 +97,7 @@ const gameMenu = (() => {
     });
   }
 
-  const getfirstPlayer = () => playerObjects[0];
+  const getFirstPlayer = () => playerObjects[0];
   const getSecondPlayer = () => playerObjects[1];
   
   // initiate startMenu object
@@ -126,7 +126,7 @@ const gameMenu = (() => {
   getNames();
   initBoard();
 
-  return { getfirstPlayer, getSecondPlayer};
+  return { getFirstPlayer, getSecondPlayer};
 })();
 
 const gameBoard = (() => {
@@ -136,7 +136,7 @@ const gameBoard = (() => {
   const info = [];
   const board = [];
 
-  const firstPlayer = gameMenu.getfirstPlayer();
+  const firstPlayer = gameMenu.getFirstPlayer();
   const secondPlayer = gameMenu.getSecondPlayer();
 
   // create info section: players name & score, reset and menu button, gameBoard div
@@ -154,8 +154,8 @@ const gameBoard = (() => {
     gameInfo.classList.add("game-info");
     firstPlayerName.classList.add("first-player-name")
     secondPlayerName.classList.add("second-player-name")
-    firstPlayerScore.classList.add("player-score")
-    secondPlayerScore.classList.add("player-score")
+    firstPlayerScore.classList.add("player-score", "first-player-score")
+    secondPlayerScore.classList.add("player-score", "second-player-score")
 
     boardMenu.classList.add("board-menu");
     menuBtn.classList.add("board-menu-btn", "menu-btn");
@@ -234,13 +234,13 @@ const gameController = (() => {
   const gameInfo = document.querySelector(".game-info");
   const boardMenu = document.querySelector(".board-menu");
   const gameBoard = document.querySelector(".game-board");
-  const firstPlayerScore = document.querySelector("span:first-of-type");
-  const secondPlayerScore = document.querySelector("span:last-of-type");
+  const firstPlayerScore = document.querySelector(".first-player-score");
+  const secondPlayerScore = document.querySelector(".second-player-score");
   const menuBtn = document.querySelector(".menu-btn");
   const resetBtn = document.querySelector(".reset-btn");
   const tiles = document.querySelectorAll(".tile");
 
-  const firstPlayer = gameMenu.getfirstPlayer();
+  const firstPlayer = gameMenu.getFirstPlayer();
   const secondPlayer = gameMenu.getSecondPlayer();
   
   let result = "";
