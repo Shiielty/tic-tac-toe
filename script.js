@@ -55,8 +55,8 @@ const gameMenu = (() => {
     });
   };
 
-  // start button's event: get player names, remove menu, initiate gameBoard object
-  const start = () => {
+  // start button's event: update input
+  const startUpdateInput = () => {
     const startBtn = document.querySelector(".start-btn");
     const playerNameInput = document.querySelectorAll(".choose-player input");
 
@@ -69,11 +69,7 @@ const gameMenu = (() => {
         } else if (playerNameInput[1].value == "") {
           playerNameInput[1].value = "Player 2";
         }
-        playerNames.push(input.value);
       });
-
-      gameMenu.remove();
-      gameBoard.init();
     });
   };
 
@@ -81,10 +77,12 @@ const gameMenu = (() => {
   const init = () => {
     createMenu();
     render();
-    start();
   };
 
-  return { init, playerNames };
+  init();
+  startUpdateInput();
+
+  return { playerNames };
 })();
 
 const gameBoard = (() => {
@@ -161,6 +159,8 @@ const gameBoard = (() => {
     render();
     gameController.init();
   };
+
+  // init();
 
   return { init };
 })();
@@ -341,4 +341,4 @@ const gameController = (() => {
 })();
 
 // gameBoard.init();
-gameMenu.init();
+// gameMenu.init();
