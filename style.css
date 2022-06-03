@@ -26,7 +26,7 @@ h1 {
 
 .game-info {
   font-size: 0.9rem;
-  margin-top: 72px;
+  margin-top: 54px;
 }
 
 .game-info span {
@@ -50,24 +50,30 @@ h1 {
   padding: 10px;
 }
 
-.reset {
+.board-menu {
+  width: 310px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.board-menu-btn {
   font-family: "Patua One", cursive;
-  font-size: 0.8rem;
-  letter-spacing: 0.4rem;
-  margin-top: 24px;
-  padding: 8px 15px;
+  font-size: 0.75rem;
+  letter-spacing: 0.2rem;
+  margin-top: 36px;
+  padding: 8px 12px;
   border-radius: 0.5rem;
   background-color: #000000;
   color: rgba(255, 255, 255, 0.95);
 }
 
-.reset:hover {
+.board-menu-btn:hover {
   background-color: #ffffff;
   color: rgba(0, 0, 0, 0.95);
 }
 
 .game-board {
-  margin-top: 24px;
+  margin-top: 12px;
   width: 310px;
   display: grid;
   gap: 5px;
