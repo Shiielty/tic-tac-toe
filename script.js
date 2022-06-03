@@ -88,8 +88,8 @@ const gameMenu = (() => {
     });
   }
   
-  const getFirstName = () => Player(playerNames[0]).getName();
-  const getSecondName = () => Player(playerNames[1]).getName();
+  const getFirstName = () => playerNames[0];
+  const getSecondName = () => playerNames[1];
   
   // initiate gameMenu object
   const initMenu = () => {
@@ -123,6 +123,9 @@ const gameBoard = (() => {
   const info = [];
   const board = [];
 
+  const firstPlayer = Player(gameMenu.getFirstName(), "x");
+  const secondPlayer = Player(gameMenu.getSecondName(), "o")
+
   // create infos section: players name, reset button & gameBoard div
   const createInfo = () => {
     const gameInfo = document.createElement("div");
@@ -135,8 +138,8 @@ const gameBoard = (() => {
     resetBtn.classList.add("reset");
     gameBoard.classList.add("game-board");
     
-    firstPlayerName.textContent = `${gameMenu.getFirstName()} v`;
-    secondPlayerName.textContent = `s ${gameMenu.getSecondName()}`;
+    firstPlayerName.textContent = `${firstPlayer.getName()} v`;
+    secondPlayerName.textContent = `s ${secondPlayer.getName()}`;
     resetBtn.textContent = "RESET"
     
     gameInfo.appendChild(firstPlayerName);
@@ -158,12 +161,12 @@ const gameBoard = (() => {
       const X = document.createElement("span");
       X.classList.add("x", "display-none");
       X.dataset.index = i;
-      X.textContent = "X";
+      X.textContent = firstPlayer.getMark().toUpperCase();
 
       const O = document.createElement("span");
       O.classList.add("o", "display-none");
       O.dataset.index = i;
-      O.textContent = "O";
+      O.textContent = secondPlayer.getMark().toUpperCase();
 
       tile.appendChild(X);
       tile.appendChild(O);
@@ -195,8 +198,8 @@ const gameBoard = (() => {
 });
 
 const gameController = (() => {
-  const firstPlayer = gameMenu.getFirstName();
-  const secondPlayer = gameMenu.getSecondName();
+  const firstPlayer = Player(gameMenu.getFirstName(), "x");
+  const secondPlayer = Player(gameMenu.getSecondName(), "o")
   
   let result = "";
 
@@ -234,20 +237,26 @@ const gameController = (() => {
 
         if (currentPlayer === firstPlayer && e.dataset.status == 0) {
           X.classList.toggle("display-none");
+          e.dataset.status = firstPlayer.getMark();
           currentPlayer = secondPlayer;
-          e.dataset.status = "x";
         } else if (currentPlayer === secondPlayer && e.dataset.status == 0) {
           O.classList.toggle("display-none");
+          e.dataset.status = secondPlayer.getMark();
           currentPlayer = firstPlayer;
-          e.dataset.status = "o";
         }
 
         result = checkWin();
 
         if (result === firstPlayer) {
           resultMessage(result);
+          firstPlayer.win();
+          console.log(firstPlayer.getScore())
+          console.log(secondPlayer.getScore())
         } else if (result === secondPlayer) {
           resultMessage(result);
+          secondPlayer.win();
+          console.log(firstPlayer.getScore())
+          console.log(secondPlayer.getScore())
         } else if (result === "draw") {
           resultMessage(result);
         }
@@ -331,7 +340,7 @@ const gameController = (() => {
     if (e === "draw") {
       resultMsg.textContent = "DRAW!";
     } else {
-      resultMsg.textContent = `${e} WIN THE GAME!`;
+      resultMsg.textContent = `${e.getName()} WIN THE GAME!`;
     }
 
     gameBoard.insertBefore(resultBg, gameBoard.firstChild);
