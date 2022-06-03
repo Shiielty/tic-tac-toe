@@ -183,19 +183,12 @@ const gameBoard = (() => {
   };
 
   init();
-
-  return { };
 });
 
 const gameController = (() => {
-  const firstPlayer = "Player 1";
-  const secondPlayer = "Player 2";
-  // const testing = gameMenu.playerNames;
-  // const player1 = gameMenu.playerNames[0];
-  // const player2 = gameMenu.playerNames[0];
+  const firstPlayer = gameMenu.getFirstName();
+  const secondPlayer = gameMenu.getSecondName();
   
-  // let firstPlayerScores = 0;
-  // let secondPlayerScores = 0;
   let result = "";
 
   let currentPlayer = firstPlayer;
@@ -354,12 +347,11 @@ const gameController = (() => {
 
   // initiate the gameController objects' functions
   const init = () => {
+    // console.log(testing, gameMenu.getFirstName(), gameMenu.getSecondName())
     events();
   };
 
   init();
-
-  return {  };
 });
 
 // gameBoard.init();
