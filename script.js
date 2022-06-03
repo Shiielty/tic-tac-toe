@@ -366,9 +366,13 @@ const gameController = (() => {
   const resultMessage = (e) => {
     const resultBg = document.createElement("div");
     const resultMsg = document.createElement("p");
+    const playAgainBtn = document.createElement("button");
 
     resultBg.classList.add("result-bg");
     resultMsg.classList.add("result-msg");
+    playAgainBtn.classList.add("board-menu-btn", "play-again")
+
+    playAgainBtn.textContent = "⟲"
 
     if (e === "draw") {
       resultMsg.textContent = "DRAW!";
@@ -378,6 +382,9 @@ const gameController = (() => {
 
     gameBoard.insertBefore(resultBg, gameBoard.firstChild);
     resultBg.appendChild(resultMsg);
+    resultBg.appendChild(playAgainBtn);
+
+    playAgainBtn.addEventListener("click", reset)
   };
 
   const backToMenu = () => {
