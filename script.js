@@ -179,7 +179,7 @@ const gameBoard = (() => {
     createInfo();
     makeTiles();
     render();
-    // gameController.init();
+    gameController();
   };
 
   init();
