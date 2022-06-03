@@ -61,8 +61,6 @@ const gameMenu = (() => {
     const playerNameInput = document.querySelectorAll(".choose-player input");
 
     startBtn.addEventListener("click", () => {
-      playerNames.splice(0, playerNames.length);
-
       playerNameInput.forEach((input) => {
         if (playerNameInput[0].value == "") {
           playerNameInput[0].value = "Player 1";
@@ -73,16 +71,40 @@ const gameMenu = (() => {
     });
   };
 
+  // get both name to the playerNames array, then invoke initBoard()
+  const getNames = () => {
+    const startBtn = document.querySelector(".start-btn");
+    const playerNameInput = document.querySelectorAll(".choose-player input");
+
+    startBtn.addEventListener("click", () => {
+      playerNames.splice(0, playerNames.length);
+      playerNames.push(playerNameInput[0].value);
+      playerNames.push(playerNameInput[1].value);
+      initBoard();
+    });
+  }
+
+  const getFirstName = () => playerNames[0];
+  const getSecondName = () => playerNames[1];
+
   // initiate gameMenu object
-  const init = () => {
+  const initMenu = () => {
     createMenu();
     render();
   };
 
-  init();
-  startUpdateInput();
+  // remove menu element and initiate gameBoard objects
+  const initBoard = () => {
+    gameMenu.remove();
+    gameBoard();
+  }
 
-  return { playerNames };
+  // Functions immediately invoked when gameMenu object initiated
+  initMenu();
+  startUpdateInput();
+  getNames();
+
+  return { playerNames, getFirstName, getSecondName};
 })();
 
 const gameBoard = (() => {
@@ -157,13 +179,13 @@ const gameBoard = (() => {
     createInfo();
     makeTiles();
     render();
-    gameController.init();
+    // gameController.init();
   };
 
-  // init();
+  init();
 
-  return { init };
-})();
+  return { };
+});
 
 const gameController = (() => {
   const firstPlayer = "Player 1";
@@ -332,8 +354,6 @@ const gameController = (() => {
 
   // initiate the gameController objects' functions
   const init = () => {
-    // console.log(gameMenu.playerNames[0], gameMenu.playerNames[1]);
-    // console.log(testing, player1, player2);
     events();
   };
 
