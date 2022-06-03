@@ -137,6 +137,8 @@ const gameBoard = (() => {
     const secondPlayerName = document.createElement("span");
     const firstPlayerScore = document.createElement("span");
     const secondPlayerScore = document.createElement("span");
+    const boardMenu = document.createElement("div");
+    const menuBtn = document.createElement("button");
     const resetBtn = document.createElement("button");
     const gameBoard = document.createElement("div");
 
@@ -145,13 +147,17 @@ const gameBoard = (() => {
     secondPlayerName.classList.add("second-player-name")
     firstPlayerScore.classList.add("player-score")
     secondPlayerScore.classList.add("player-score")
-    resetBtn.classList.add("reset");
+
+    boardMenu.classList.add("board-menu");
+    menuBtn.classList.add("board-menu-btn");
+    resetBtn.classList.add("board-menu-btn", "reset-btn")
     gameBoard.classList.add("game-board");
     
     firstPlayerName.textContent = `${firstPlayer.getName()} v`;
     secondPlayerName.textContent = `s ${secondPlayer.getName()}`;
     firstPlayerScore.textContent = `${firstPlayer.getScore()}`
     secondPlayerScore.textContent = `${secondPlayer.getScore()}`
+    menuBtn.textContent = "◀ MENU"
     resetBtn.textContent = "RESET"
     
     gameInfo.appendChild(firstPlayerScore)
@@ -159,8 +165,10 @@ const gameBoard = (() => {
     gameInfo.appendChild(secondPlayerName);
     gameInfo.appendChild(secondPlayerScore)
     
+    boardMenu.appendChild(menuBtn);
+    boardMenu.appendChild(resetBtn);
     info.push(gameInfo);
-    info.push(resetBtn);
+    info.push(boardMenu);
     info.push(gameBoard);
   }
 
@@ -212,6 +220,9 @@ const gameBoard = (() => {
 });
 
 const gameController = (() => {
+  // cached DOM
+  const firstPlayerScore = document.querySelector("span:first-of-type");
+  const secondPlayerScore = document.querySelector("span:last-of-type");
 
   const firstPlayer = gameMenu.getfirstPlayer();
   const secondPlayer = gameMenu.getSecondPlayer();
@@ -265,13 +276,11 @@ const gameController = (() => {
         if (result === firstPlayer) {
           resultMessage(result);
           firstPlayer.win();
-          console.log(firstPlayer.getScore())
-          console.log(secondPlayer.getScore())
+          firstPlayerScore.textContent = firstPlayer.getScore();
         } else if (result === secondPlayer) {
           resultMessage(result);
           secondPlayer.win();
-          console.log(firstPlayer.getScore())
-          console.log(secondPlayer.getScore())
+          secondPlayerScore.textContent = secondPlayer.getScore();
         } else if (result === "draw") {
           resultMessage(result);
         }
@@ -364,7 +373,7 @@ const gameController = (() => {
 
   // list of events
   const events = () => {
-    const resetBtn = document.querySelector(".reset");
+    const resetBtn = document.querySelector(".reset-btn");
     const tiles = document.querySelectorAll(".tile");
 
     resetBtn.addEventListener("click", reset);
