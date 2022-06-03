@@ -7,8 +7,9 @@ const Player = (names, mark) => {
   const getMark = () => mark;
   const win = () => score++;
   const getScore = () => score;
+  const resetScore = () => score = 0;
 
-  return { getName, getMark, win, getScore }
+  return { getName, getMark, win, getScore, resetScore }
 }
 
 const gameMenu = (() => {
@@ -242,28 +243,7 @@ const gameController = (() => {
 
   let currentPlayer = firstPlayer;
 
-  // reset the board
-  const reset = () => {
-    const tiles = document.querySelectorAll(".tile");
-
-    tiles.forEach((tile) => {
-      const X = tile.childNodes[0];
-      const O = tile.childNodes[1];
-
-      X.classList.add("display-none");
-      O.classList.add("display-none");
-
-      tile.dataset.status = 0;
-    });
-
-    currentPlayer = firstPlayer;
-    result = "";
-    if (gameBoard.firstChild.classList.value === "result-bg") {
-      const resultElement = document.querySelector(".result-bg");
-      resultElement.remove();
-    }
-  };
-
+  
   // event triggered when user click the board
   const turn = (e) => {
     e.addEventListener("click", () => {
@@ -280,9 +260,9 @@ const gameController = (() => {
           e.dataset.status = secondPlayer.getMark();
           currentPlayer = firstPlayer;
         }
-
+        
         result = checkWin();
-
+        
         if (result === firstPlayer) {
           resultMessage(result);
           firstPlayer.win();
@@ -301,16 +281,16 @@ const gameController = (() => {
   // checking if a player win the game
   const checkWin = () => {
     const tiles = document.querySelectorAll(".tile");
-
+    
     // check tile status and put it in the tileValue array
     const tileValue = [];
     tiles.forEach((tile) => {
       tileNumber = tile.dataset.index;
       tileStatus = tile.dataset.status;
-
+      
       tileValue[tileNumber] = tileStatus;
     });
-
+    
     if (
       (tileValue[0] == "o" && tileValue[1] == "o" && tileValue[2] == "o") ||
       (tileValue[3] == "o" && tileValue[4] == "o" && tileValue[5] == "o") ||
@@ -320,18 +300,18 @@ const gameController = (() => {
       (tileValue[2] == "o" && tileValue[5] == "o" && tileValue[8] == "o") ||
       (tileValue[0] == "o" && tileValue[4] == "o" && tileValue[8] == "o") ||
       (tileValue[2] == "o" && tileValue[4] == "o" && tileValue[6] == "o")
-    ) {
-      return secondPlayer;
-    } else if (
-      (tileValue[0] == "x" && tileValue[1] == "x" && tileValue[2] == "x") ||
-      (tileValue[3] == "x" && tileValue[4] == "x" && tileValue[5] == "x") ||
-      (tileValue[6] == "x" && tileValue[7] == "x" && tileValue[8] == "x") ||
-      (tileValue[0] == "x" && tileValue[3] == "x" && tileValue[6] == "x") ||
-      (tileValue[1] == "x" && tileValue[4] == "x" && tileValue[7] == "x") ||
-      (tileValue[2] == "x" && tileValue[5] == "x" && tileValue[8] == "x") ||
-      (tileValue[0] == "x" && tileValue[4] == "x" && tileValue[8] == "x") ||
-      (tileValue[2] == "x" && tileValue[4] == "x" && tileValue[6] == "x")
-    ) {
+      ) {
+        return secondPlayer;
+      } else if (
+        (tileValue[0] == "x" && tileValue[1] == "x" && tileValue[2] == "x") ||
+        (tileValue[3] == "x" && tileValue[4] == "x" && tileValue[5] == "x") ||
+        (tileValue[6] == "x" && tileValue[7] == "x" && tileValue[8] == "x") ||
+        (tileValue[0] == "x" && tileValue[3] == "x" && tileValue[6] == "x") ||
+        (tileValue[1] == "x" && tileValue[4] == "x" && tileValue[7] == "x") ||
+        (tileValue[2] == "x" && tileValue[5] == "x" && tileValue[8] == "x") ||
+        (tileValue[0] == "x" && tileValue[4] == "x" && tileValue[8] == "x") ||
+        (tileValue[2] == "x" && tileValue[4] == "x" && tileValue[6] == "x")
+        ) {
       return firstPlayer;
     } else if (
       tileValue[0] != 0 &&
@@ -358,22 +338,22 @@ const gameController = (() => {
       tileValue[2] != 0 &&
       tileValue[4] != 0 &&
       tileValue[6] != 0
-    ) {
-      return "draw";
-    } else return "";
-  };
+      ) {
+        return "draw";
+      } else return "";
+    };
 
   const resultMessage = (e) => {
     const resultBg = document.createElement("div");
     const resultMsg = document.createElement("p");
     const playAgainBtn = document.createElement("button");
-
+    
     resultBg.classList.add("result-bg");
     resultMsg.classList.add("result-msg");
     playAgainBtn.classList.add("board-menu-btn", "play-again")
-
+    
     playAgainBtn.textContent = "⟲"
-
+    
     if (e === "draw") {
       resultMsg.textContent = "DRAW!";
     } else {
@@ -383,16 +363,47 @@ const gameController = (() => {
     gameBoard.insertBefore(resultBg, gameBoard.firstChild);
     resultBg.appendChild(resultMsg);
     resultBg.appendChild(playAgainBtn);
-
-    playAgainBtn.addEventListener("click", reset)
+    
+    playAgainBtn.addEventListener("click", resetBoard)
   };
-
+  
   const backToMenu = () => {
     gameInfo.remove();
     boardMenu.remove();
     gameBoard.remove();
-    reset();
+    resetBoard();
     startMenu.classList.remove("display-none");
+  }
+  
+  // reset the board
+  const resetBoard = () => {
+    const tiles = document.querySelectorAll(".tile");
+
+    tiles.forEach((tile) => {
+      const X = tile.childNodes[0];
+      const O = tile.childNodes[1];
+
+      X.classList.add("display-none");
+      O.classList.add("display-none");
+
+      tile.dataset.status = 0;
+    });
+
+    currentPlayer = firstPlayer;
+    result = "";
+    if (gameBoard.firstChild.classList.value === "result-bg") {
+      const resultElement = document.querySelector(".result-bg");
+      resultElement.remove();
+    }
+  };
+
+  // reset the board AND the score
+  const reset = () => {
+    resetBoard();
+    firstPlayer.resetScore();
+    secondPlayer.resetScore();
+    firstPlayerScore.textContent = firstPlayer.getScore();
+    secondPlayerScore.textContent = secondPlayer.getScore();
   }
 
   // list of events
