@@ -135,19 +135,29 @@ const gameBoard = (() => {
     const gameInfo = document.createElement("div");
     const firstPlayerName = document.createElement("span");
     const secondPlayerName = document.createElement("span");
+    const firstPlayerScore = document.createElement("span");
+    const secondPlayerScore = document.createElement("span");
     const resetBtn = document.createElement("button");
     const gameBoard = document.createElement("div");
 
     gameInfo.classList.add("game-info");
+    firstPlayerName.classList.add("first-player-name")
+    secondPlayerName.classList.add("second-player-name")
+    firstPlayerScore.classList.add("player-score")
+    secondPlayerScore.classList.add("player-score")
     resetBtn.classList.add("reset");
     gameBoard.classList.add("game-board");
     
     firstPlayerName.textContent = `${firstPlayer.getName()} v`;
     secondPlayerName.textContent = `s ${secondPlayer.getName()}`;
+    firstPlayerScore.textContent = `${firstPlayer.getScore()}`
+    secondPlayerScore.textContent = `${secondPlayer.getScore()}`
     resetBtn.textContent = "RESET"
     
+    gameInfo.appendChild(firstPlayerScore)
     gameInfo.appendChild(firstPlayerName);
     gameInfo.appendChild(secondPlayerName);
+    gameInfo.appendChild(secondPlayerScore)
     
     info.push(gameInfo);
     info.push(resetBtn);
