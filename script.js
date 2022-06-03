@@ -1,3 +1,4 @@
+// Player Function Factory
 // using 'names' instead 'name' because 'name' is marked as deprecated.
 const Player = (names, mark) => {
   
@@ -13,7 +14,7 @@ const Player = (names, mark) => {
 }
 
 const gameMenu = (() => {
-  // cached DOM && create game-menu div
+  // cached DOM && create start-menu div
   const wrapper = document.querySelector(".wrapper");
   const startMenu = document.createElement("div");
   startMenu.classList.add("start-menu");
@@ -23,28 +24,31 @@ const gameMenu = (() => {
   const _playerNames = [];
   const playerObjects = [];
 
-  // create _menu for naming players
+  // create _menu for asking players name
   const createMenu = () => {
     const p = document.createElement("p");
-    p.textContent = "Choose Your Character";
+    p.textContent = "Choose Your Mark!";
     _menu.push(p);
 
     for (let i = 0; i < 2; i++) {
       const div = document.createElement("div");
-      const playerBtn = document.createElement("button");
+      div.classList.add("player-input");
+      const playerMark = document.createElement("span");
       const playerName = document.createElement("input");
 
       div.classList.add("choose-player");
       playerName.setAttribute("type", "text");
       if (i == 0) {
-        playerBtn.textContent = "X";
+        playerMark.textContent = "X:";
+        playerMark.style.color = "#829dff";
         playerName.setAttribute("value", "Player 1");
       } else {
-        playerBtn.textContent = "O";
+        playerMark.textContent = "O:";
+        playerMark.style.color = "#ff6969";
         playerName.setAttribute("value", "Player 2");
       }
 
-      div.appendChild(playerBtn);
+      div.appendChild(playerMark);
       div.appendChild(playerName);
       _menu.push(div);
     }
@@ -62,8 +66,8 @@ const gameMenu = (() => {
     });
   };
 
-  // start button's event: update input
-  const startUpdateInput = () => {
+  // update input if the input was empty
+  const updateInput = () => {
     const startBtn = document.querySelector(".start-btn");
     const playerNameInput = document.querySelectorAll(".choose-player input");
 
@@ -78,7 +82,7 @@ const gameMenu = (() => {
     });
   };
 
-  // get both name to the _playerNames array, then invoke initBoard()
+  // input both name to the _playerNames array
   const getNames = () => {
     const startBtn = document.querySelector(".start-btn");
     const playerNameInput = document.querySelectorAll(".choose-player input");
@@ -118,7 +122,7 @@ const gameMenu = (() => {
 
   // Functions immediately invoked when gameMenu object initiated
   initMenu();
-  startUpdateInput();
+  updateInput();
   getNames();
   initBoard();
 
@@ -135,7 +139,7 @@ const gameBoard = (() => {
   const firstPlayer = gameMenu.getfirstPlayer();
   const secondPlayer = gameMenu.getSecondPlayer();
 
-  // create infos section: players name, reset button & gameBoard div
+  // create info section: players name & score, reset and menu button, gameBoard div
   const createInfo = () => {
     const gameInfo = document.createElement("div");
     const firstPlayerName = document.createElement("span");
@@ -367,14 +371,6 @@ const gameController = (() => {
     playAgainBtn.addEventListener("click", resetBoard)
   };
   
-  const backToMenu = () => {
-    resetBoard();
-    gameInfo.remove();
-    boardMenu.remove();
-    gameBoard.remove();
-    startMenu.classList.remove("display-none");
-  }
-  
   // reset the board
   const resetBoard = () => {
     const tiles = document.querySelectorAll(".tile");
@@ -382,13 +378,13 @@ const gameController = (() => {
     tiles.forEach((tile) => {
       const X = tile.childNodes[0];
       const O = tile.childNodes[1];
-
+      
       X.classList.add("display-none");
       O.classList.add("display-none");
-
+      
       tile.dataset.status = 0;
     });
-
+    
     currentPlayer = firstPlayer;
     result = "";
     if (gameBoard.firstChild.classList.value === "result-bg") {
@@ -396,6 +392,15 @@ const gameController = (() => {
       resultElement.remove();
     }
   };
+  
+  // reset the board AND back to start-menu
+  const backToMenu = () => {
+    resetBoard();
+    gameInfo.remove();
+    boardMenu.remove();
+    gameBoard.remove();
+    startMenu.classList.remove("display-none");
+  }
 
   // reset the board AND the score
   const reset = () => {
@@ -406,7 +411,7 @@ const gameController = (() => {
     secondPlayerScore.textContent = secondPlayer.getScore();
   }
 
-  // list of events
+  // menuBtn && resetBtn event listeners
   const events = () => {
     menuBtn.addEventListener("click", backToMenu);
     resetBtn.addEventListener("click", reset);
