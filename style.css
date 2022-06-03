@@ -10,7 +10,7 @@ font-family: 'Patua One', cursive;
 font-family: 'Press Start 2P', cursive; */
 
 .wrapper {
-  padding: 50px;
+  padding: 50px 0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -26,19 +26,28 @@ h1 {
 
 .game-info {
   font-size: 0.9rem;
-  padding: 0 10px;
   margin-top: 72px;
 }
 
-.game-info > span {
-  background-color: var(--red);
-  padding: 12px 5px 12px 20px;
+.game-info span {
+  display: inline-block;
 }
 
-.game-info > span + span {
+.first-player-name {
+  background-color: var(--red);
+  padding: 10px 5px 10px 20px;
+}
+
+.second-player-name {
   background-color: var(--blue);
   color: #ffffff;
-  padding: 12px 20px 12px 5px;
+  padding: 10px 20px 10px 5px;
+}
+
+.player-score {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 10px;
 }
 
 .reset {
