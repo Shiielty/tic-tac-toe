@@ -84,8 +84,8 @@ const gameMenu = (() => {
     });
   }
 
-  const getFirstName = () => playerNames[0];
-  const getSecondName = () => playerNames[1];
+  const getFirstName = () => Player(playerNames[0]).getName();
+  const getSecondName = () => Player(playerNames[1]).getName();
 
   // initiate gameMenu object
   const initMenu = () => {
