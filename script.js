@@ -104,7 +104,7 @@ const gameMenu = (() => {
   startUpdateInput();
   getNames();
 
-  return { playerNames, getFirstName, getSecondName};
+  return { getFirstName, getSecondName};
 })();
 
 const gameBoard = (() => {
@@ -126,8 +126,8 @@ const gameBoard = (() => {
     resetBtn.classList.add("reset");
     gameBoard.classList.add("game-board");
     
-    firstPlayerName.textContent = `${gameMenu.playerNames[0]} v`;
-    secondPlayerName.textContent = `s ${gameMenu.playerNames[1]}`;
+    firstPlayerName.textContent = `${gameMenu.getFirstName()} v`;
+    secondPlayerName.textContent = `s ${gameMenu.getSecondName()}`;
     resetBtn.textContent = "RESET"
     
     gameInfo.appendChild(firstPlayerName);
