@@ -75,34 +75,38 @@ const gameMenu = (() => {
   const getNames = () => {
     const startBtn = document.querySelector(".start-btn");
     const playerNameInput = document.querySelectorAll(".choose-player input");
-
+    
     startBtn.addEventListener("click", () => {
       playerNames.splice(0, playerNames.length);
       playerNames.push(playerNameInput[0].value);
       playerNames.push(playerNameInput[1].value);
-      initBoard();
     });
   }
-
+  
   const getFirstName = () => Player(playerNames[0]).getName();
   const getSecondName = () => Player(playerNames[1]).getName();
-
+  
   // initiate gameMenu object
   const initMenu = () => {
     createMenu();
     render();
   };
-
+  
   // remove menu element and initiate gameBoard objects
   const initBoard = () => {
-    gameMenu.remove();
-    gameBoard();
+    const startBtn = document.querySelector(".start-btn");
+
+    startBtn.addEventListener("click", () => {
+      gameMenu.remove();
+      gameBoard();
+    })
   }
 
   // Functions immediately invoked when gameMenu object initiated
   initMenu();
   startUpdateInput();
   getNames();
+  initBoard();
 
   return { getFirstName, getSecondName};
 })();
