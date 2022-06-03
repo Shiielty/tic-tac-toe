@@ -420,7 +420,7 @@ const gameController = (() => {
     });
   };
 
-  // initiate the gameController objects' functions
+  // initiate the gameController objects' functions.
   const init = () => {
     events();
   };
